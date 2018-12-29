@@ -1,0 +1,14 @@
+<idea-plugin>
+    <id>pl.michalperlak.walkmod-idea</id>
+    <name>Walkmod IDEA</name>
+    <vendor email="kontakt@michalperlak.com" url="http://www.michalperlak.pl">Michał Perlak</vendor>
+    <description>Plugin for running Walkmod(http://walkmod.com)</description>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
