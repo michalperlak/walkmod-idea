@@ -1,1 +1,1 @@
-"# walkmod-idea" 
+# walkmod-idea
