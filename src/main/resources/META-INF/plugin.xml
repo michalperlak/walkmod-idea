@@ -5,7 +5,8 @@
     <description>Plugin for running Walkmod(http://walkmod.com)</description>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
+        <applicationConfigurable groupId="root" displayName="Walkmod" id="Walkmod"
+                             instance="pl.michalperlak.walkmod.idea.settings.WalkmodConfigurable"/>
     </extensions>
 
     <actions>

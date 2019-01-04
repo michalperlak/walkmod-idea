@@ -10,7 +10,8 @@ import com.intellij.openapi.components.Storage
     storages = [Storage("walkmod-plugin.xml")]
 )
 class WalkmodSettings : PersistentStateComponent<WalkmodSettings> {
-    private var config: WalkmodConfig = WalkmodConfig.getDefault()
+    var config = WalkmodConfig()
+        private set
 
     override fun getState(): WalkmodSettings = this
 
@@ -23,11 +24,6 @@ class WalkmodSettings : PersistentStateComponent<WalkmodSettings> {
     }
 
     companion object {
-        fun getInstance(): WalkmodSettings = ServiceManager.getService(WalkmodSettings::class.java)
-
-        fun getConfig(): WalkmodConfig {
-            val settings = getInstance()
-            return settings.config
-        }
+        fun getInstance(): WalkmodSettings? = ServiceManager.getService(WalkmodSettings::class.java)
     }
 }
