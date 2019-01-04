@@ -1,5 +1,7 @@
 package pl.michalperlak.walkmod.idea.settings.ui
 
+import com.intellij.openapi.fileChooser.FileChooserDescriptor
+import com.intellij.openapi.ui.TextComponentAccessor
 import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.components.JBLabel
@@ -10,6 +12,7 @@ import java.awt.Component
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 import java.awt.Insets
+import javax.swing.BoxLayout
 import javax.swing.JComponent
 import javax.swing.JPanel
 
@@ -32,11 +35,12 @@ class WalkmodSettingsUI {
         init {
             layout = GridBagLayout()
             addElement(useEmbeddedCheckbox, gridx = 0, gridy = 1)
-            val walkmodHomeLabel = JBLabel("Walkmod home")
-            addElement(walkmodHomeLabel, gridx = 0, gridy = 2, weightx = 0.0)
-            addElement(walkmodHomeField, gridx = 1, gridy = 2)
+            val walkmodHomePanel = createWalkmodHomePanel()
+            addElement(walkmodHomePanel, gridx = 0, gridy = 2, weightx = 0.0, anchor = GridBagConstraints.NORTHWEST)
             addElement(offlineCheckbox, gridx = 0, gridy = 3)
             addElement(JPanel(), gridx = 0, gridy = 4, weightx = 1.0, weighty = 1.0)
+            configureFileChooser()
+            registerListeners()
             initValues(config)
         }
 
@@ -45,7 +49,8 @@ class WalkmodSettingsUI {
             gridx: Int = 0,
             gridy: Int = 0,
             weightx: Double = 1.0,
-            weighty: Double = 0.0
+            weighty: Double = 0.0,
+            anchor: Int = GridBagConstraints.NORTH
         ) {
             val constraints = GridBagConstraints()
             constraints.fill = GridBagConstraints.HORIZONTAL
@@ -54,8 +59,34 @@ class WalkmodSettingsUI {
             constraints.weightx = weightx
             constraints.weighty = weighty
             constraints.insets = DEFAULT_INSETS
-            constraints.anchor = GridBagConstraints.NORTH
+            constraints.anchor = anchor
             add(element, constraints)
+        }
+
+        private fun createWalkmodHomePanel(): JPanel {
+            val walkmodHomePanel = JPanel()
+            val walkmodHomeLayout = BoxLayout(walkmodHomePanel, BoxLayout.X_AXIS)
+            walkmodHomePanel.layout = walkmodHomeLayout
+            walkmodHomePanel.add(JBLabel("Walkmod home"))
+            walkmodHomePanel.add(walkmodHomeField)
+            return walkmodHomePanel
+        }
+
+        private fun configureFileChooser() {
+            val fileChooserDescriptor = FileChooserDescriptor(false, true, false, false, false, false)
+            walkmodHomeField.addBrowseFolderListener(
+                "",
+                "Walkmod home",
+                null,
+                fileChooserDescriptor,
+                TextComponentAccessor.TEXT_FIELD_WHOLE_TEXT
+            )
+        }
+
+        private fun registerListeners() {
+            useEmbeddedCheckbox.addActionListener {
+                walkmodHomeField.isEnabled = !useEmbeddedCheckbox.isSelected
+            }
         }
 
         private fun initValues(config: WalkmodConfig) {
