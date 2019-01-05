@@ -1,6 +1,5 @@
 package pl.michalperlak.walkmod.idea.settings.ui
 
-import com.intellij.openapi.fileChooser.FileChooserDescriptor
 import com.intellij.openapi.ui.TextComponentAccessor
 import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.ui.components.JBCheckBox
@@ -8,6 +7,7 @@ import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBPanel
 import com.intellij.ui.components.JBTextField
 import pl.michalperlak.walkmod.idea.settings.WalkmodConfig
+import pl.michalperlak.walkmod.idea.settings.WalkmodHomeChooserDescriptor
 import java.awt.Component
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
@@ -75,7 +75,7 @@ class WalkmodSettingsUI {
         }
 
         private fun configureFileChooser() {
-            val fileChooserDescriptor = FileChooserDescriptor(false, true, false, false, false, false)
+            val fileChooserDescriptor = WalkmodHomeChooserDescriptor()
             walkmodHomeField.addBrowseFolderListener(
                 "",
                 "Walkmod home",
