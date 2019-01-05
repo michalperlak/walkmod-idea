@@ -1,12 +1,12 @@
 package pl.michalperlak.walkmod.idea.settings
 
-data class WalkmodConfig(
+data class WalkmodPluginConfig(
     val isEmbedded: Boolean = true,
     val walkmodHome: String = "",
     val isOffline: Boolean = false
 ) {
     companion object {
-        fun getCurrent(): WalkmodConfig {
+        fun getCurrent(): WalkmodPluginConfig {
             val settings = WalkmodSettings.getInstance()
             return settings.getConfig()
         }

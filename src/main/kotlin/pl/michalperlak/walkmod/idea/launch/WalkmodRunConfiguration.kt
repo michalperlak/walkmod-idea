@@ -27,7 +27,7 @@ class WalkmodRunConfiguration(
         val group = SettingsEditorGroup<WalkmodRunConfiguration>()
         group.addEditor(
             ExecutionBundle.message("run.configuration.configuration.tab.title"),
-            WalkmodSettingsEditor()
+            WalkmodSettingsEditor(project)
         )
         JavaRunConfigurationExtensionManager.instance.appendEditors(this, group)
         group.addEditor(ExecutionBundle.message("logs.tab.title"), LogConfigurationPanel())
