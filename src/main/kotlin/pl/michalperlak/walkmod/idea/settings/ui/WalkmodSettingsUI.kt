@@ -19,18 +19,20 @@ import javax.swing.JPanel
 class WalkmodSettingsUI {
     private val panel by lazy { WalkmodSettingsPanel(WalkmodConfig.getCurrent()) }
 
-    fun createConfig(): WalkmodConfig {
-        // TODO
-        return WalkmodConfig.getCurrent()
-    }
+    fun createConfig(): WalkmodConfig = WalkmodConfig(
+        isEmbedded = panel.useEmbeddedCheckbox.isSelected,
+        walkmodHome = panel.walkmodHomeField.text,
+        isOffline = panel.offlineCheckbox.isSelected
+    )
 
-    fun isModified(): Boolean = false
+    fun isModified(): Boolean = WalkmodConfig.getCurrent() != createConfig()
+
     fun createComponent(): JComponent = panel
 
     inner class WalkmodSettingsPanel(config: WalkmodConfig) : JBPanel<WalkmodSettingsPanel>() {
-        private val useEmbeddedCheckbox = JBCheckBox("Use embedded version")
-        private val walkmodHomeField = TextFieldWithBrowseButton(JBTextField(TEXT_FIELD_SIZE))
-        private val offlineCheckbox = JBCheckBox("Offline")
+        val useEmbeddedCheckbox = JBCheckBox("Use embedded version")
+        val walkmodHomeField = TextFieldWithBrowseButton(JBTextField(TEXT_FIELD_SIZE))
+        val offlineCheckbox = JBCheckBox("Offline")
 
         init {
             layout = GridBagLayout()
@@ -92,7 +94,7 @@ class WalkmodSettingsUI {
         private fun initValues(config: WalkmodConfig) {
             useEmbeddedCheckbox.isSelected = config.isEmbedded
             walkmodHomeField.isEnabled = !config.isEmbedded
-            walkmodHomeField.text = config.walkmodHome?.toString() ?: ""
+            walkmodHomeField.text = config.walkmodHome
             offlineCheckbox.isSelected = config.isOffline
         }
     }

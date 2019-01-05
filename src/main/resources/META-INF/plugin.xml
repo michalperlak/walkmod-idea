@@ -6,7 +6,9 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable groupId="root" displayName="Walkmod" id="Walkmod"
-                             instance="pl.michalperlak.walkmod.idea.settings.WalkmodConfigurable"/>
+                                 instance="pl.michalperlak.walkmod.idea.settings.WalkmodConfigurable"/>
+        <applicationService serviceInterface="pl.michalperlak.walkmod.idea.settings.WalkmodSettings"
+                            serviceImplementation="pl.michalperlak.walkmod.idea.settings.WalkmodSettings"/>
     </extensions>
 
     <actions>

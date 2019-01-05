@@ -15,7 +15,7 @@ internal class WalkmodConfigurable : SearchableConfigurable {
 
     override fun apply() {
         val settings = WalkmodSettings.getInstance()
-        settings?.apply(settingsUI.createConfig())
+        settings.apply(settingsUI.createConfig())
     }
 
     override fun createComponent(): JComponent? = settingsUI.createComponent()
