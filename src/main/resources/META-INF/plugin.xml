@@ -13,6 +13,24 @@
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
+        <group id="pl.michalperlak.walkmod.idea.actions.WalkmodActionsGroup"
+               class="pl.michalperlak.walkmod.idea.actions.WalkmodActionsGroup" popup="true" text="Walkmod">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+
+            <action id="pl.michalperlak.walkmod.idea.actions.WalkmodApplyAction"
+                    class="pl.michalperlak.walkmod.idea.actions.WalkmodApplyAction" text="apply"
+                    description="Execute walkmod apply command">
+            </action>
+            <action id="pl.michalperlak.walkmod.idea.actions.WalkmodCheckAction"
+                    class="pl.michalperlak.walkmod.idea.actions.WalkmodCheckAction" text="check"
+                    description="Execute walkmod check command">
+            </action>
+            <action id="pl.michalperlak.walkmod.idea.actions.WalkmodInstallAction"
+                    class="pl.michalperlak.walkmod.idea.actions.WalkmodInstallAction" text="install"
+                    description="Execute walkmod install command">
+            </action>
+        </group>
     </actions>
 </idea-plugin>

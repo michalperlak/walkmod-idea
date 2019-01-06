@@ -21,12 +21,14 @@ class WalkmodSettingsEditor(project: Project) : SettingsEditor<WalkmodRunConfigu
     private val editorPanel by lazy { WalkmodSettingsEditorPanel(project) }
 
     override fun resetEditorFrom(runConfiguration: WalkmodRunConfiguration) {
+        //TODO
     }
 
     override fun createEditor(): JComponent = editorPanel
 
     override fun applyEditorTo(runConfiguration: WalkmodRunConfiguration) {
         editorPanel.moduleSelector.applyTo(runConfiguration)
+        //TODO
     }
 
     inner class WalkmodSettingsEditorPanel(project: Project) : AbstractGridBagPanel<WalkmodSettingsEditorPanel>() {
