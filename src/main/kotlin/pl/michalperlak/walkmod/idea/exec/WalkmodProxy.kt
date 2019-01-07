@@ -1,14 +1,14 @@
 package pl.michalperlak.walkmod.idea.exec
 
 import pl.michalperlak.walkmod.idea.settings.WalkmodPluginConfig
-import java.io.File
+import java.nio.file.Path
 
 interface WalkmodProxy {
-    fun check(vararg chains: String): List<File>
+    fun check(vararg chains: String): List<Path>
 
-    fun apply(vararg chains: String): List<File>
+    fun apply(vararg chains: String): List<Path>
 
-    fun patch(vararg chains: String): List<File>
+    fun patch(vararg chains: String): List<Path>
 
     fun install()
 
