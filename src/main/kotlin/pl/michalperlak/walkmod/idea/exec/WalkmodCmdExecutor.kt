@@ -1,6 +1,5 @@
 package pl.michalperlak.walkmod.idea.exec
 
-import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -18,16 +17,8 @@ class WalkmodCmdExecutor(walkmodHomePath: String) : WalkmodProxy {
     }
 
     private fun executeCommand(command: String, chains: Array<out String>): List<Path> {
+        val chainsArg = chains.joinToString(separator = " ")
+        val args = "$command $chainsArg"
         TODO()
-    }
-
-    private fun getConfigFiles(): List<Path> {
-        val configDir = walkmodHome.resolve("config")
-        return Files.newDirectoryStream(configDir).use { it.toList() }
-    }
-
-    private fun getLibFiles(): List<Path> {
-        val configDir = walkmodHome.resolve("lib")
-        return Files.newDirectoryStream(configDir).use { it.toList() }
     }
 }

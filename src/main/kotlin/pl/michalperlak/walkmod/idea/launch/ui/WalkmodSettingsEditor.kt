@@ -18,7 +18,16 @@ import javax.swing.JComponent
 import javax.swing.JPanel
 
 class WalkmodSettingsEditor(project: Project) : SettingsEditor<WalkmodRunConfiguration>() {
-    private val editorPanel by lazy { WalkmodSettingsEditorPanel(project) }
+    private val modulesComboBox = ModuleDescriptionsComboBox().apply { setAllModulesFromProject(project) }
+    private val commandComboBox = ComboBox<String>(arrayOf("apply", "check", "install")) //TODO
+    private val installationComboBox = ComboBox<String>(arrayOf("EMBEDDED")) //TODO
+    private val workingDir = TextFieldWithBrowseButton(JBTextField(project.basePath))
+    private val offlineCheckBox = JBCheckBox("Offline")
+    private val stacktraceCheckBox = JBCheckBox("Stacktrace")
+    private val jreSelector = JrePathEditor()
+    private val shortedCommandLineCombo = ShortenCommandLineModeCombo(project, jreSelector, modulesComboBox)
+    private val moduleSelector = ConfigurationModuleSelector(project, modulesComboBox)
+    private val editorPanel by lazy { WalkmodSettingsEditorPanel() }
 
     override fun resetEditorFrom(runConfiguration: WalkmodRunConfiguration) {
         //TODO
@@ -27,21 +36,13 @@ class WalkmodSettingsEditor(project: Project) : SettingsEditor<WalkmodRunConfigu
     override fun createEditor(): JComponent = editorPanel
 
     override fun applyEditorTo(runConfiguration: WalkmodRunConfiguration) {
-        editorPanel.moduleSelector.applyTo(runConfiguration)
-        //TODO
+        moduleSelector.applyTo(runConfiguration)
+        runConfiguration.setModule(moduleSelector.module)
+        runConfiguration.alternativeJrePath = jreSelector.jrePathOrName
+        runConfiguration.isAlternativeJrePathEnabled = jreSelector.isAlternativeJreSelected
     }
 
-    inner class WalkmodSettingsEditorPanel(project: Project) : AbstractGridBagPanel<WalkmodSettingsEditorPanel>() {
-        private val modulesComboBox = ModuleDescriptionsComboBox().apply { setAllModulesFromProject(project) }
-        private val commandComboBox = ComboBox<String>(arrayOf("apply", "check", "install")) //TODO
-        private val installationComboBox = ComboBox<String>(arrayOf("EMBEDDED")) //TODO
-        private val workingDir = TextFieldWithBrowseButton(JBTextField(project.basePath))
-        private val offlineCheckBox = JBCheckBox("Offline")
-        private val stacktraceCheckBox = JBCheckBox("Stacktrace")
-        private val jreSelector = JrePathEditor()
-        private val shortedCommandLineCombo = ShortenCommandLineModeCombo(project, jreSelector, modulesComboBox)
-        val moduleSelector = ConfigurationModuleSelector(project, modulesComboBox)
-
+    inner class WalkmodSettingsEditorPanel : AbstractGridBagPanel<WalkmodSettingsEditorPanel>() {
         init {
             var yIndex = 1
             addElement(createLabeled(modulesComboBox, "Module"), gridx = 0, gridy = yIndex++)
