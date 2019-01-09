@@ -17,6 +17,7 @@ class WalkmodCommandLineState(
         val params = JavaParameters()
         val jreHome = if (myConfiguration.isAlternativeJrePathEnabled) myConfiguration.alternativeJrePath else null
         params.jdk = JavaParametersUtil.createProjectJdk(myConfiguration.project, jreHome)
+        params.mainClass = WalkmodLaunchConstants.MAIN_CLASS
         setupJavaParameters(params)
         setupClassPath(params)
         return params

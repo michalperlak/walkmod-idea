@@ -59,9 +59,9 @@ class WalkmodRunConfiguration(
 
     override fun getValidModules(): Collection<Module> = ModuleManager.getInstance(project).modules.toList()
 
-    override fun getRunClass(): String = "org.walkmod.WalkModDispatcher"
+    override fun getRunClass(): String = WalkmodLaunchConstants.MAIN_CLASS
 
-    override fun getPackage(): String = "org.walkmod"
+    override fun getPackage(): String = WalkmodLaunchConstants.PACKAGE
 
     override fun setEnvs(envs: Map<String, String>) {
         state.envs = envs
@@ -73,7 +73,9 @@ class WalkmodRunConfiguration(
         state.alternativeJrePath = path ?: ""
     }
 
-    override fun getAlternativeJrePath(): String? = state.alternativeJrePath
+    override fun getAlternativeJrePath(): String? =
+        if (state.alternativeJrePathEnabled) state.alternativeJrePath
+        else null
 
     override fun setProgramParameters(value: String?) {
         state.programParameters = value ?: ""

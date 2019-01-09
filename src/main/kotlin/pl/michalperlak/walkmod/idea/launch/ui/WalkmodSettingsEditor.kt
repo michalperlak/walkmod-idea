@@ -30,7 +30,9 @@ class WalkmodSettingsEditor(project: Project) : SettingsEditor<WalkmodRunConfigu
     private val editorPanel by lazy { WalkmodSettingsEditorPanel() }
 
     override fun resetEditorFrom(runConfiguration: WalkmodRunConfiguration) {
-        //TODO
+        moduleSelector.reset(runConfiguration)
+        jreSelector.setPathOrName(runConfiguration.alternativeJrePath, runConfiguration.isAlternativeJrePathEnabled)
+        workingDir.text = runConfiguration.workingDirectory
     }
 
     override fun createEditor(): JComponent = editorPanel
@@ -40,6 +42,7 @@ class WalkmodSettingsEditor(project: Project) : SettingsEditor<WalkmodRunConfigu
         runConfiguration.setModule(moduleSelector.module)
         runConfiguration.alternativeJrePath = jreSelector.jrePathOrName
         runConfiguration.isAlternativeJrePathEnabled = jreSelector.isAlternativeJreSelected
+        runConfiguration.workingDirectory = workingDir.text
     }
 
     inner class WalkmodSettingsEditorPanel : AbstractGridBagPanel<WalkmodSettingsEditorPanel>() {
