@@ -1,6 +1,7 @@
 package pl.michalperlak.walkmod.idea.launch.ui
 
 import com.intellij.application.options.ModuleDescriptionsComboBox
+import com.intellij.execution.ShortenCommandLine
 import com.intellij.execution.ui.ConfigurationModuleSelector
 import com.intellij.execution.ui.DefaultJreSelector
 import com.intellij.execution.ui.JrePathEditor
@@ -11,6 +12,7 @@ import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.components.JBTextField
+import pl.michalperlak.walkmod.idea.launch.WalkmodCommand
 import pl.michalperlak.walkmod.idea.launch.WalkmodRunConfiguration
 import pl.michalperlak.walkmod.idea.ui.AbstractGridBagPanel
 import java.awt.FlowLayout
@@ -19,7 +21,7 @@ import javax.swing.JPanel
 
 class WalkmodSettingsEditor(project: Project) : SettingsEditor<WalkmodRunConfiguration>() {
     private val modulesComboBox = ModuleDescriptionsComboBox().apply { setAllModulesFromProject(project) }
-    private val commandComboBox = ComboBox<String>(arrayOf("apply", "check", "install")) //TODO
+    private val commandComboBox = ComboBox<WalkmodCommand>(WalkmodCommand.values())
     private val installationComboBox = ComboBox<String>(arrayOf("EMBEDDED")) //TODO
     private val workingDir = TextFieldWithBrowseButton(JBTextField(project.basePath))
     private val offlineCheckBox = JBCheckBox("Offline")
@@ -33,6 +35,8 @@ class WalkmodSettingsEditor(project: Project) : SettingsEditor<WalkmodRunConfigu
         moduleSelector.reset(runConfiguration)
         jreSelector.setPathOrName(runConfiguration.alternativeJrePath, runConfiguration.isAlternativeJrePathEnabled)
         workingDir.text = runConfiguration.workingDirectory
+        shortedCommandLineCombo.selectedItem = runConfiguration.shortenCommandLineMode
+        commandComboBox.selectedItem = runConfiguration.walkmodCommand
     }
 
     override fun createEditor(): JComponent = editorPanel
@@ -43,6 +47,8 @@ class WalkmodSettingsEditor(project: Project) : SettingsEditor<WalkmodRunConfigu
         runConfiguration.alternativeJrePath = jreSelector.jrePathOrName
         runConfiguration.isAlternativeJrePathEnabled = jreSelector.isAlternativeJreSelected
         runConfiguration.workingDirectory = workingDir.text
+        runConfiguration.shortenCommandLineMode = shortedCommandLineCombo.selectedItem ?: ShortenCommandLine.NONE
+        runConfiguration.walkmodCommand = commandComboBox.selectedItem as WalkmodCommand
     }
 
     inner class WalkmodSettingsEditorPanel : AbstractGridBagPanel<WalkmodSettingsEditorPanel>() {

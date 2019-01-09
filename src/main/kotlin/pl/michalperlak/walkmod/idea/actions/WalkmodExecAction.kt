@@ -3,10 +3,8 @@ package pl.michalperlak.walkmod.idea.actions
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.PlatformDataKeys
-import pl.michalperlak.walkmod.idea.exec.WalkmodConfig
-import pl.michalperlak.walkmod.idea.exec.WalkmodProxy
+import pl.michalperlak.walkmod.idea.launch.WalkmodLauncher
 import pl.michalperlak.walkmod.idea.utils.WalkmodIcons
-import java.nio.file.Paths
 
 abstract class WalkmodExecAction(
     text: String,
@@ -15,10 +13,9 @@ abstract class WalkmodExecAction(
 
     override fun actionPerformed(event: AnActionEvent) {
         val project = event.getRequiredData(PlatformDataKeys.PROJECT)
-        val walkmodConfig = WalkmodConfig(executionDirectory = Paths.get(project.basePath))
-        val walkmodProxy = WalkmodProxy.create(walkmodConfig)
+        val walkmodProxy = WalkmodLauncher(project)
         execute(walkmodProxy)
     }
 
-    abstract fun execute(walkmodProxy: WalkmodProxy)
+    abstract fun execute(walkmodLauncher: WalkmodLauncher)
 }

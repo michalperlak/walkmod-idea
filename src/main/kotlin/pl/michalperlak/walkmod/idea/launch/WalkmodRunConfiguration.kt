@@ -1,10 +1,7 @@
 package pl.michalperlak.walkmod.idea.launch
 
 import com.intellij.diagnostic.logging.LogConfigurationPanel
-import com.intellij.execution.CommonJavaRunConfigurationParameters
-import com.intellij.execution.ExecutionBundle
-import com.intellij.execution.Executor
-import com.intellij.execution.JavaRunConfigurationExtensionManager
+import com.intellij.execution.*
 import com.intellij.execution.configurations.*
 import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.execution.util.JavaParametersUtil
@@ -32,6 +29,14 @@ class WalkmodRunConfiguration(
     configurationFactory
 ), CommonJavaRunConfigurationParameters {
     private val state = JavaRunConfigurationState()
+
+    var shortenCommandLineMode: ShortenCommandLine
+        get() = state.shortenCommandLineMode
+        set(value) {
+            state.shortenCommandLineMode = value
+        }
+
+    var walkmodCommand: WalkmodCommand = WalkmodCommand.CHECK
 
     override fun getConfigurationEditor(): SettingsEditor<out RunConfiguration> {
         val group = SettingsEditorGroup<WalkmodRunConfiguration>()
@@ -120,5 +125,6 @@ class WalkmodRunConfiguration(
         var programParameters: String = ""
         var passParentEnvs = true
         var workingDir: String = ""
+        var shortenCommandLineMode: ShortenCommandLine = ShortenCommandLine.NONE
     }
 }
