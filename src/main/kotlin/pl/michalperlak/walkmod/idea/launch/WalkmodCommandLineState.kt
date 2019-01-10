@@ -38,7 +38,7 @@ class WalkmodCommandLineState(
 
     private fun getConfigFiles(): List<Path> {
         val configDir = walkmodHome.resolve("config")
-        return Files.newDirectoryStream(configDir).use { it.toList() }
+        return Files.newDirectoryStream(configDir).use { it.toList() } + listOf(configDir)
     }
 
     private fun getLibFiles(): List<Path> {
