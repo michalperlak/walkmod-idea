@@ -15,21 +15,15 @@ class WalkmodSettings : PersistentStateComponent<WalkmodSettings.State> {
     override fun getState(): WalkmodSettings.State = myState
 
     override fun loadState(state: WalkmodSettings.State) {
-        myState.isEmbedded = state.isEmbedded
         myState.walkmodHome = state.walkmodHome
-        myState.isOffline = state.isOffline
     }
 
     fun apply(newPluginConfig: WalkmodPluginConfig) {
-        myState.isEmbedded = newPluginConfig.isEmbedded
         myState.walkmodHome = newPluginConfig.walkmodHome
-        myState.isOffline = newPluginConfig.isOffline
     }
 
     fun getConfig() = WalkmodPluginConfig(
-        isEmbedded = myState.isEmbedded,
-        walkmodHome = myState.walkmodHome,
-        isOffline = myState.isOffline
+        walkmodHome = myState.walkmodHome
     )
 
     companion object {
